@@ -1,17 +1,102 @@
 # Typical Analysis Scenarios Guide
 
-## Scenario Overview
+## Default Mode: Definition Review
 
-| Scenario | Input Combination | Analysis Depth | Typical Use Case |
-|---------|------------------|----------------|------------------|
-| A | Trace + Goal | L1 Basic | Quick troubleshooting of obvious errors |
-| B | + Skill | L1-L3 | Analyze Skill execution effectiveness |
-| C | + Tool | L1-L3 | Analyze Tool call effectiveness |
-| D | + Agent | L1-L3 Deep | Analyze custom Agent |
+**Default behavior**: When user says "review skill", use **Definition Review** mode.
+
+**Execution Review**: Only when user **explicitly** mentions "analyze execution", "review trace", or "执行过程评估".
+
+| Mode | When to Use | Input |
+|------|-------------|-------|
+| **Definition Review** (Default) | "review skill", "check quality", "validate" | Skill folder path |
+| **Execution Review** (Explicit only) | "analyze execution", "review trace" | Execution trace + goal |
 
 ---
 
-## Scenario A: Quick Troubleshooting
+# Mode A: Definition Review Scenarios
+
+## Scenario A1: Pre-publish Check
+
+**Input:** Skill folder path
+
+**Applicable:**
+- About to publish a new Skill
+- Want to verify it meets standards
+- Quick quality check
+
+**Workflow:**
+```
+Step 1: Read Skill folder structure
+        ls -la ${SKILL_PATH}/
+        
+Step 2: Check Structure (S1-S4)
+        - SKILL.md exists?
+        - Folder naming kebab-case?
+        - Directory structure correct?
+        
+Step 3: Check Format (F1-F5)
+        - YAML frontmatter valid?
+        - name field correct?
+        - description field present?
+        
+Step 4: Check Content (C1-C8)
+        - Description has WHAT and WHEN?
+        - Instructions actionable?
+        - Examples provided?
+        
+Step 5: Check Trigger (T1-T3)
+        - Trigger phrases clear?
+        - Scope appropriate?
+        
+Step 6: Output report with Summary + Details + Comments
+```
+
+> See `references/definition-checklist.md` for complete checklist
+> See `references/definition-report.md` for report template
+
+---
+
+## Scenario A2: Post-modification Validation
+
+**Input:** Skill folder path + Change context
+
+**Applicable:**
+- Just modified a Skill
+- Want to ensure changes don't break things
+- Regression check
+
+**Workflow:**
+```
+Step 1: Read current Skill state
+Step 2: Run full checklist (S1-T3)
+Step 3: Focus on areas likely affected by changes
+Step 4: Output report highlighting potential issues
+```
+
+---
+
+## Scenario A3: Quality Improvement
+
+**Input:** Skill folder path + "want to improve"
+
+**Applicable:**
+- Skill works but want to make it better
+- Looking for optimization opportunities
+- Learning best practices
+
+**Workflow:**
+```
+Step 1: Run full checklist
+Step 2: Focus on ⚠️ warnings (not just ❌ failures)
+Step 3: Provide detailed improvement suggestions
+Step 4: Reference best practices from guide
+```
+
+---
+
+# Mode B: Execution Review Scenarios
+
+## Scenario B1: Quick Troubleshooting
 
 **Input:** Execution trace + Execution goal
 
@@ -51,7 +136,7 @@
 
 ---
 
-## Scenario B: Skill Analysis
+## Scenario B2: Skill Execution Analysis
 
 **Input:** Execution trace + Execution goal + Skill implementation
 
@@ -76,8 +161,8 @@
 **Workflow:**
 ```
 Step 1: Read Skill implementation
-        cat skills/${SKILL_NAME}/SKILL.md
-        ls skills/${SKILL_NAME}/
+        cat ${SKILL_PATH}/SKILL.md
+        ls ${SKILL_PATH}/
 
 Step 2: Extract design elements
         - Workflow steps
@@ -114,7 +199,7 @@ For references/:
 
 ---
 
-## Scenario C: Tool Analysis
+## Scenario B3: Tool Execution Analysis
 
 **Input:** Execution trace + Execution goal + Tool implementation
 
@@ -140,7 +225,6 @@ For references/:
 ```
 Step 1: Read Tool implementation
         cat path/to/tool/implementation.ts
-        # Or extract definition from tools.json
 
 Step 2: Extract Tool design
         - Parameter schema
@@ -178,7 +262,7 @@ For Tool implementation:
 
 ---
 
-## Scenario D: Agent Deep Analysis
+## Scenario B4: Agent Deep Analysis
 
 **Input:** Execution trace + Execution goal + Skill + Agent implementation
 
@@ -204,7 +288,7 @@ For Tool implementation:
 ```
 Step 1: Read all implementations
         # Skill
-        cat skills/${SKILL_NAME}/SKILL.md
+        cat ${SKILL_PATH}/SKILL.md
         
         # Agent
         cat ${AGENT_PATH}/system-prompt.md
@@ -247,15 +331,16 @@ Problem may be at:
 ```
 Start
   │
-  ├─ Just want to quickly check for errors?
-  │     └─ Scenario A (Minimal)
+  ├─ Want to check Skill definition quality?
+  │     └─ Mode A (Definition Review)
+  │           ├─ Pre-publish? → A1
+  │           ├─ After modification? → A2
+  │           └─ Want to improve? → A3
   │
-  ├─ Know what Skill was used?
-  │     └─ Scenario B (Skill Analysis)
-  │
-  ├─ Mainly a Tool problem?
-  │     └─ Scenario C (Tool Analysis)
-  │
-  └─ Analyzing your own Agent + have source?
-        └─ Scenario D (Deep Analysis)
+  └─ Want to analyze execution?
+        └─ Mode B (Execution Review)
+              ├─ Quick check? → B1 (Minimal)
+              ├─ Skill issue? → B2 (Skill Analysis)
+              ├─ Tool issue? → B3 (Tool Analysis)
+              └─ Agent deep analysis? → B4 (Deep)
 ```
