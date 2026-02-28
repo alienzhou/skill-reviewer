@@ -405,6 +405,19 @@ echo "正在运行 skill 定义审查..."
 [提供两份执行轨迹]
 ```
 
+## 参考资料
+
+本工具基于 **Claude 官方技能构建指南**设计。如需深入了解技能开发最佳实践，请参阅 `assets/` 目录下的原始参考资料：
+
+- **[The Complete Guide to Building Skills for Claude](assets/the-complete-guideto-building-skills-for-claude.pdf)** - Claude 官方技能开发指南（英文）
+- **[Skills 构建指南](assets/skills构建指南.pdf)** - 中文版指南
+
+这些 PDF 提供了全面的指导，包括：
+- 技能结构和组织
+- SKILL.md 前置信息要求
+- 触发设计模式
+- AI 原生开发最佳实践
+
 ## 许可证
 
 MIT License - 详见 LICENSE 文件
@@ -412,3 +425,5 @@ MIT License - 详见 LICENSE 文件
 ---
 
 **为 AI 原生开发而生** 🚀
+
+*基于 Claude 官方技能构建指南*
