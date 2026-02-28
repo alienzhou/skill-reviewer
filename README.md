@@ -4,19 +4,33 @@
 
 ![Skill Reviewer](./assets/skill-reviewer.png)
 
-A universal execution review tool that evaluates Skill/Tool/Agent execution performance through three-layer progressive analysis.
+A universal Skill review tool with two modes: **Definition Review** (default) for validating Skill quality, and **Execution Review** for analyzing runtime performance.
 
 ## What is This?
 
-**Skill Reviewer** is an AI-native tool designed to systematically analyze and improve the execution quality of AI Skills, Tools, and Agents. It provides a structured framework to:
+**Skill Reviewer** is an AI-native tool designed to systematically analyze and improve AI Skills quality. It provides:
 
-- **Diagnose** execution issues quickly
-- **Evaluate** whether goals are achieved
-- **Optimize** efficiency and implementation
+- **Definition Review** (Default): Validate Skill structure, format, content, and triggers against a 20-item checklist
+- **Execution Review** (Explicit): Analyze runtime performance through three-layer progressive analysis
 
-Think of it as a code review system, but for AI execution traces.
+Think of it as a linter + code review system for AI Skills.
 
-## Three-Layer Analysis Framework
+## Two Review Modes
+
+### Mode A: Definition Review (Default)
+
+Validate Skill quality with a **20-item checklist** across four categories:
+
+| Category     | Focus                | Items |
+| ------------ | -------------------- | ----- |
+| 📁 Structure | File/folder layout   | S1-S4 |
+| 📋 Format    | YAML frontmatter     | F1-F5 |
+| 📝 Content   | Instructions quality | C1-C8 |
+| 🎯 Trigger   | Activation design    | T1-T3 |
+
+### Mode B: Execution Review (Explicit)
+
+Three-layer progressive analysis for runtime performance:
 
 ```
 L1 Engineering Correctness ──▶ L2 Goal Achievement ──▶ L3 Optimization Space
@@ -29,10 +43,10 @@ L1 Engineering Correctness ──▶ L2 Goal Achievement ──▶ L3 Optimizati
 
 ## Features
 
-- ✅ **Universal**: Works with any Skill, Tool, or Agent
-- 📊 **Systematic**: Three-layer progressive analysis
+- ✅ **Dual Mode**: Definition Review (default) + Execution Review (explicit)
+- 📊 **Systematic**: 20-item checklist for definitions, 3-layer analysis for execution
 - 🎯 **Actionable**: Provides specific, prioritized improvement suggestions
-- 🔍 **Comprehensive**: Four input dimensions for thorough analysis
+- 🔍 **Comprehensive**: Covers structure, format, content, triggers, and runtime
 
 ## Installation
 
@@ -45,11 +59,11 @@ L1 Engineering Correctness ──▶ L2 Goal Achievement ──▶ L3 Optimizati
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-org/skill-reviewer.git
+git clone https://github.com/vibe-x-ai/skill-reviewer.git
 cd skill-reviewer
 
 # Create symlink to your skills directory
-ln -s $(pwd)/skills/skill-reviewer ~/.claude/skills/skill-reviewer
+ln -s $(pwd)/skill-reviewer ~/.claude/skills/skill-reviewer
 ```
 
 ### Verify Installation
@@ -65,26 +79,47 @@ After installation, the skill should appear in your AI editor's skill list. You 
 ### In Claude Code
 
 1. **Trigger the skill** by asking:
-  ```
-   "Review this skill execution"
-   "Analyze this agent trace"
-   "Check if this tool works correctly"
-  ```
-2. **Provide required inputs** when prompted:
-  - Execution trace (paste your agent logs)
-  - Original goal (what you wanted to achieve)
-3. **Optionally provide** for deeper analysis:
-  - Skill/Tool name or file path
-  - Agent source code path
-4. **Receive structured report** with:
-  - Engineering issues (if any)
-  - Goal achievement rating
-  - Optimization suggestions
-
-**Example conversation:**
 
 ```
-You: Review this skill execution
+   "Review my skill"           # → Definition Review (default)
+   "Check skill quality"       # → Definition Review
+   "Analyze this execution"    # → Execution Review (explicit)
+   "Review this trace"         # → Execution Review (explicit)
+```
+
+2. **For Definition Review** (default):
+
+- Provide: Skill folder path (e.g., `./my-skill/`)
+- Receive: 20-item checklist report with pass/warn/fail status
+
+3. **For Execution Review** (explicit):
+
+- Provide: Execution trace + original goal
+- Optionally: Skill/Tool source code path
+- Receive: L1/L2/L3 analysis report
+
+**Example - Definition Review:**
+
+```
+You: Review my skill at ./my-skill/
+
+Claude: [Reads folder structure, checks SKILL.md]
+        [Runs 20-item checklist]
+        [Generates review report]
+
+# 🔍 Skill Review: my-skill
+| Category | ✅ Pass | ⚠️ Warn | ❌ Fail |
+|----------|---------|---------|--------|
+| Structure | 4 | 0 | 0 |
+| Format | 5 | 0 | 0 |
+| Content | 6 | 2 | 0 |
+| Trigger | 3 | 0 | 0 |
+```
+
+**Example - Execution Review:**
+
+```
+You: Analyze this skill execution
 
 Claude: I'll help review the execution. Please provide:
 1. [Required] Execution trace - The agent execution process
@@ -93,75 +128,84 @@ Claude: I'll help review the execution. Please provide:
 
 You: [Paste execution trace]
      Goal: "Generate API documentation"
-     Used: doc-generator skill
 
-Claude: [Generates detailed review report]
+Claude: [Generates L1/L2/L3 analysis report]
 ```
 
 ### In Cursor
 
 1. **Open Cursor** and ensure the skill is installed (symlinked to `~/.claude/skills/`)
 2. **In chat or composer**, use natural language:
-  ```
-   "Review the execution of this agent task"
-   "Analyze this skill performance"
-  ```
+
+```
+   "Review my skill at ./my-skill/"    # Definition Review
+   "Check skill quality"                # Definition Review
+   "Analyze this execution trace"       # Execution Review
+```
+
 3. **Provide context** by:
-  - Pasting execution logs directly in chat
-  - Referencing files with `@filename`
-  - Sharing terminal output
+
+- Referencing skill folders with `@my-skill/`
+- Pasting execution logs directly in chat
+- Sharing terminal output
+
 4. **Get instant feedback** with actionable suggestions
 
 **Tips for Cursor:**
 
 - Use `@skill-reviewer` to explicitly invoke the skill
-- Attach files with execution traces using drag-and-drop
-- Reference specific code sections for targeted analysis
+- Reference skill folders for definition review
+- Attach execution traces for runtime analysis
 
 ### In Windsurf
 
 1. **Ensure skill is symlinked** to `~/.claude/skills/skill-reviewer`
 2. **In cascade mode**, simply describe your need:
-  ```
-   "This agent execution didn't work as expected, help review it"
-  ```
-3. **Windsurf will automatically**:
-  - Load the skill-reviewer
-  - Guide you through input collection
-  - Generate comprehensive report
-4. **Use flow mode** for interactive review:
-  - Ask questions about specific execution steps
-  - Dive deeper into L1/L2/L3 layers
-  - Iterate on optimization suggestions
 
-### In Other MCP-Compatible Editors
+```
+   "Review my skill"              # Definition Review (default)
+   "This execution failed, help"  # Execution Review
+```
+
+3. **Windsurf will automatically**:
+
+- Detect review mode from your request
+- Guide you through input collection
+- Generate comprehensive report
+
+4. **Use flow mode** for interactive review:
+
+- Drill down into specific checklist items
+- Explore L1/L2/L3 analysis details
+- Iterate on improvement suggestions
+
+### In Others
 
 If your editor supports MCP Skills:
 
 1. **Install skill** via symlink to your editor's skills directory
-2. **Trigger** by mentioning keywords: "review", "analyze", "skill execution"
-3. **Follow prompts** to provide execution trace and goal
+2. **Trigger** by mentioning keywords:
+   - Definition: "review skill", "check quality", "validate skill"
+   - Execution: "analyze execution", "review trace"
+3. **Follow prompts** to provide required inputs
 4. **Review output** and apply suggestions
 
 ## What to Provide for Review
 
-### Required Inputs
+### For Definition Review (Default)
 
+| Input                | Description                | Example                                         |
+| -------------------- | -------------------------- | ----------------------------------------------- |
+| **Skill Path** | Folder containing SKILL.md | `./my-skill/`, `~/.claude/skills/my-skill/` |
 
-| Input               | Description                              | How to Get                      |
-| ------------------- | ---------------------------------------- | ------------------------------- |
-| **Execution Trace** | Complete agent/tool execution log        | Copy from terminal/chat history |
-| **Execution Goal**  | Original user prompt or task description | Your initial request            |
+### For Execution Review (Explicit)
 
-
-### Optional Inputs (for deeper analysis)
-
-
-| Input                        | Description                        | When to Provide                   |
-| ---------------------------- | ---------------------------------- | --------------------------------- |
-| **Implementation Reference** | Skill/Tool source code or SKILL.md | When reviewing custom skills      |
-| **Agent Implementation**     | Agent source code                  | When investigating agent behavior |
-
+| Input                              | Required | Description                       |
+| ---------------------------------- | -------- | --------------------------------- |
+| **Execution Trace**          | ✅ Yes   | Complete agent/tool execution log |
+| **Execution Goal**           | ✅ Yes   | Original user prompt              |
+| **Implementation Reference** | Optional | Skill/Tool source code            |
+| **Agent Implementation**     | Optional | Agent source code                 |
 
 ### Example Execution Trace
 
@@ -176,9 +220,35 @@ Tool Output: docs/api.md created
 Result: ✓ Documentation generated
 ```
 
-## Output Example
+## Output Examples
 
-After analysis, you'll receive a structured report:
+### Definition Review Output
+
+```markdown
+# 🔍 Skill Review: my-skill
+
+> Path: `./my-skill/`
+
+## 📊 Summary
+
+| Category | ✅ Pass | ⚠️ Warn | ❌ Fail |
+|----------|---------|---------|--------|
+| Structure | 4 | 0 | 0 |
+| Format | 5 | 0 | 0 |
+| Content | 6 | 2 | 0 |
+| Trigger | 3 | 0 | 0 |
+| **Total** | **18** | **2** | **0** |
+
+## 📁 Structure
+- ✅ **S1 SKILL.md exists**
+- ✅ **S2 References folder** — Has references/ with support files
+
+## 💡 Improvements
+- C3: Add troubleshooting section
+- C5: Include end-to-end example
+```
+
+### Execution Review Output
 
 ```markdown
 ## Execution Review Report
@@ -198,31 +268,27 @@ After analysis, you'll receive a structured report:
 ✓✓✓ Excellent
 - Documentation generated with correct structure
 - All API endpoints covered
-- Examples included
 
 ### L3: Optimization Space 💡
 1. **Token Efficiency**: File read twice unnecessarily
 2. **Implementation**: Could cache parsed OpenAPI structure
-3. **Output**: Consider adding table of contents
-
-### Summary
-Execution successful with excellent results.
-Priority optimization: Implement caching to reduce redundant file reads.
 ```
 
 ## Project Structure
 
 ```
 skill-reviewer/
-├── skills/
-│   └── skill-reviewer/          # Main skill
-│       ├── SKILL.md             # Skill definition
-│       └── references/
-│           ├── input-guide.md          # Input collection guide
-│           ├── analysis-dimensions.md  # Analysis checklists
-│           ├── scenarios.md            # Usage scenarios
-│           └── report-templates.md     # Report formats
-├── discuss/                      # Design documents
+├── skill-reviewer/               # Main skill
+│   ├── SKILL.md                  # Skill definition (two modes)
+│   └── references/
+│       ├── definition-checklist.md   # 20-item checklist (S/F/C/T)
+│       ├── definition-report.md      # Definition review template
+│       ├── input-guide.md            # Execution review inputs
+│       ├── analysis-dimensions.md    # L1/L2/L3 checklists
+│       ├── execution-guide.md        # Execution plan generation
+│       ├── scenarios.md              # Usage scenarios
+│       └── report-templates.md       # Report formats
+├── .discuss/                     # Design documents
 ├── AGENTS.md                     # Skill development guide
 ├── README.md                     # This file
 └── README_CN.md                  # Chinese documentation
@@ -230,11 +296,13 @@ skill-reviewer/
 
 ## Documentation
 
-- **[SKILL.md](skills/skill-reviewer/SKILL.md)** - Complete skill specification
-- **[input-guide.md](skills/skill-reviewer/references/input-guide.md)** - Four input dimensions explained
-- **[analysis-dimensions.md](skills/skill-reviewer/references/analysis-dimensions.md)** - L1/L2/L3 checklists
-- **[scenarios.md](skills/skill-reviewer/references/scenarios.md)** - Common usage scenarios
-- **[report-templates.md](skills/skill-reviewer/references/report-templates.md)** - Output formats
+- **[SKILL.md](skill-reviewer/SKILL.md)** - Complete skill specification (two modes)
+- **[definition-checklist.md](skill-reviewer/references/definition-checklist.md)** - 20-item quality checklist
+- **[definition-report.md](skill-reviewer/references/definition-report.md)** - Definition review template
+- **[input-guide.md](skill-reviewer/references/input-guide.md)** - Four input dimensions for execution review
+- **[analysis-dimensions.md](skill-reviewer/references/analysis-dimensions.md)** - L1/L2/L3 checklists
+- **[scenarios.md](skill-reviewer/references/scenarios.md)** - Common usage scenarios
+- **[report-templates.md](skill-reviewer/references/report-templates.md)** - Output formats
 
 ## Contributing
 
@@ -247,54 +315,57 @@ We welcome contributions! Please see [AGENTS.md](AGENTS.md) for:
 
 ## Use Cases
 
-### 1. Debugging Failed Executions
-
-```
-Scenario: Agent task failed, unsure why
-Action: Provide execution trace → Get L1 engineering analysis
-Result: Identify specific error and fix
-```
-
-### 2. Improving Performance
-
-```
-Scenario: Task works but feels slow
-Action: Request full L1-L3 review
-Result: Discover redundant calls, optimize token usage
-```
-
-### 3. Validating Custom Skills
+### 1. Validating New Skills
 
 ```
 Scenario: Built a new skill, want to verify quality
-Action: Run test execution → Review with skill-reviewer
-Result: Catch implementation issues before production
+Action: "Review my skill at ./new-skill/"
+Result: Get 20-item checklist report, fix issues before publishing
+```
+
+### 2. Debugging Failed Executions
+
+```
+Scenario: Agent task failed, unsure why
+Action: "Analyze this execution trace" + paste logs
+Result: L1 analysis identifies specific error
+```
+
+### 3. Improving Skill Quality
+
+```
+Scenario: Skill works but could be better
+Action: Definition review for structure + Execution review for runtime
+Result: Comprehensive improvement suggestions
 ```
 
 ### 4. Learning Best Practices
 
 ```
 Scenario: New to skill development
-Action: Review example executions with L3 analysis
-Result: Learn optimization patterns and anti-patterns
+Action: Review example skills to understand patterns
+Result: Learn from pass/warn/fail feedback
 ```
 
 ## FAQ
 
-**Q: Do I need to provide all four inputs?**
-A: No. Only execution trace and goal are required. Others enhance analysis depth.
+**Q: What's the difference between Definition Review and Execution Review?**
+A: Definition Review checks Skill quality (SKILL.md structure, content). Execution Review analyzes runtime performance (tool calls, errors, efficiency).
 
-**Q: Can it review human-written code?**
-A: It's designed for AI execution traces, but principles apply to code review too.
+**Q: When should I use which mode?**
+A: Use Definition Review (default) when building/improving Skills. Use Execution Review when debugging runtime issues or optimizing performance.
+
+**Q: Do I need to provide all inputs?**
+A: For Definition Review, just provide the skill path. For Execution Review, trace + goal are required; others enhance analysis depth.
+
+**Q: Can it review any Skill?**
+A: Yes! It works with any SKILL.md-based Skill regardless of implementation.
 
 **Q: How long does a review take?**
-A: Typically 1-2 minutes for complete L1-L3 analysis.
+A: Definition Review: ~30 seconds. Execution Review: 1-2 minutes for full L1-L3 analysis.
 
-**Q: Does it work with any Skill/Tool?**
-A: Yes! It's implementation-agnostic and works with any execution trace.
-
-**Q: Can I customize the analysis dimensions?**
-A: The three layers are standard, but you can fork and modify for specific needs.
+**Q: Can I customize the checklist?**
+A: The 20-item checklist is standard, but you can fork and modify for specific needs.
 
 ## License
 
