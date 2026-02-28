@@ -157,28 +157,6 @@ Claude: [Generates L1/L2/L3 analysis report]
 - Reference skill folders for definition review
 - Attach execution traces for runtime analysis
 
-### In Windsurf
-
-1. **Ensure skill is symlinked** to `~/.claude/skills/skill-reviewer`
-2. **In cascade mode**, simply describe your need:
-
-```
-   "Review my skill"              # Definition Review (default)
-   "This execution failed, help"  # Execution Review
-```
-
-3. **Windsurf will automatically**:
-
-- Detect review mode from your request
-- Guide you through input collection
-- Generate comprehensive report
-
-4. **Use flow mode** for interactive review:
-
-- Drill down into specific checklist items
-- Explore L1/L2/L3 analysis details
-- Iterate on improvement suggestions
-
 ### In Others
 
 If your editor supports MCP Skills:

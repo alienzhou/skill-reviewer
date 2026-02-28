@@ -34,7 +34,7 @@ To use skills from this repository, create a symlink:
 
 ```bash
 # Install skill-reviewer
-ln -s /path/to/skill-reviewer/skills/skill-reviewer ~/.claude/skills/skill-reviewer
+ln -s /path/to/skill-reviewer/skill-reviewer ~/.claude/skills/skill-reviewer
 ```
 
 ---
@@ -43,15 +43,16 @@ ln -s /path/to/skill-reviewer/skills/skill-reviewer ~/.claude/skills/skill-revie
 
 ```
 skill-reviewer/
-├── skills/                       # Skill definitions and implementations
-│   └── skill-reviewer/          # Skill Reviewer skill
-│       ├── SKILL.md
-│       └── references/
+├── skill-reviewer/               # Skill Reviewer skill
+│   ├── SKILL.md                 # Main skill definition
+│   └── references/              # Supporting documents
 │
-├── discuss/                      # Discussion records and decision documents
+├── assets/                       # Static resources (images, PDFs)
+├── .discuss/                     # Discussion records and decision documents
 │
 ├── AGENTS.md                     # This file, project overview and skill management
-└── README.md                     # Project overview
+├── README.md                     # Project overview (English)
+└── README_CN.md                  # Project overview (Chinese)
 ```
 
 ---
