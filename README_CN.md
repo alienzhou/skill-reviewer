@@ -8,7 +8,9 @@
 
 ## 这是什么？
 
-**Skill Reviewer** 是一个为 AI 原生开发设计的工具，用于系统化地分析和改进 AI Skills 的质量。它提供：
+**Skill Reviewer** 是一个为 AI 原生开发设计的工具，用于系统化地分析和改进 AI Skills 的质量，基于 [**Claude 官方技能构建指南**](assets/skills构建指南.pdf) ([English](assets/the-complete-guideto-building-skills-for-claude.pdf)) 设计。
+
+它提供：
 
 - **定义审查**（默认）：通过 20 项检查清单验证 Skill 的结构、格式、内容和触发设计
 - **执行审查**（显式）：通过三层渐进式分析评估运行时性能
@@ -404,19 +406,6 @@ echo "正在运行 skill 定义审查..."
 "对比这两次执行，看看哪个实现更好"
 [提供两份执行轨迹]
 ```
-
-## 参考资料
-
-本工具基于 **Claude 官方技能构建指南**设计。如需深入了解技能开发最佳实践，请参阅 `assets/` 目录下的原始参考资料：
-
-- **[The Complete Guide to Building Skills for Claude](assets/the-complete-guideto-building-skills-for-claude.pdf)** - Claude 官方技能开发指南（英文）
-- **[Skills 构建指南](assets/skills构建指南.pdf)** - 中文版指南
-
-这些 PDF 提供了全面的指导，包括：
-- 技能结构和组织
-- SKILL.md 前置信息要求
-- 触发设计模式
-- AI 原生开发最佳实践
 
 ## 许可证
 

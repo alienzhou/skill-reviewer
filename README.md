@@ -8,7 +8,9 @@ A universal Skill review tool with two modes: **Definition Review** (default) fo
 
 ## What is This?
 
-**Skill Reviewer** is an AI-native tool designed to systematically analyze and improve AI Skills quality. It provides:
+**Skill Reviewer** is an AI-native tool designed to systematically analyze and improve AI Skills quality, based on [**Claude's official skill building guidelines**](assets/the-complete-guideto-building-skills-for-claude.pdf) ([中文版](assets/skills构建指南.pdf)).
+
+It provides:
 
 - **Definition Review** (Default): Validate Skill structure, format, content, and triggers against a 20-item checklist
 - **Execution Review** (Explicit): Analyze runtime performance through three-layer progressive analysis
@@ -344,19 +346,6 @@ A: Definition Review: ~30 seconds. Execution Review: 1-2 minutes for full L1-L3 
 
 **Q: Can I customize the checklist?**
 A: The 20-item checklist is standard, but you can fork and modify for specific needs.
-
-## References
-
-This tool is based on **Claude's official skill building guidelines**. For deeper understanding of skill development best practices, see the original reference materials in `assets/`:
-
-- **[The Complete Guide to Building Skills for Claude](assets/the-complete-guideto-building-skills-for-claude.pdf)** - Official Claude skill development guide (English)
-- **[Skills 构建指南](assets/skills构建指南.pdf)** - Chinese version of the guide
-
-These PDFs provide comprehensive guidance on:
-- Skill structure and organization
-- SKILL.md frontmatter requirements
-- Trigger design patterns
-- Best practices for AI-native development
 
 ## License
 
