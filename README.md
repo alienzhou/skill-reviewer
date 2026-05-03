@@ -60,6 +60,11 @@ L1 Engineering Correctness ──▶ L2 Goal Achievement ──▶ L3 Optimizati
 ### Install via Symlink
 
 ```bash
+## 使用skills.sh 安装
+bunx skills add  alienzhou/skill-reviewer
+```
+
+```bash
 # Clone the repository
 git clone https://github.com/vibe-x-ai/skill-reviewer.git
 cd skill-reviewer
